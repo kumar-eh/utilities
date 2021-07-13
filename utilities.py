@@ -3,7 +3,12 @@ from tkinter.messagebox import *
 from PIL import Image
 import time
 import winsound
-    
+global secs_counter
+global mins_counter
+global hours_counter
+secs_counter = 0
+mins_counter = 0
+hours_counter = 0
 def alarm():
     print("alarm")
 
@@ -43,7 +48,81 @@ def timer():
     back.place(relx = 0 , rely = 0)
     
 def stopwatch():
+    global secs_counter
+    global mins_counter
+    global hours_counter
+
+    def stopstop():
+        global secs_counter
+        global mins_counter
+        global hours_counter
+        secs_counter = 0
+        mins_counter = 0
+        hours_counter = 0
+        
+    def back2():
+        global secs_counter
+        global mins_counter
+        global hours_counter
+        stopwatch_frame.destroy()
+        secs_counter = 0
+        mins_counter = 0
+        hours_counter = 0
+        
+    def stopwa(): 
+        def counter(label1 , label2 , label3):
+            def count():
+                 global secs_counter
+                 global mins_counter
+                 global hours_counter
+                 if(True):
+                     if(secs_counter>58):
+                         secs_counter = 1
+                         label1.config(text=str(secs_counter))
+                         label1.after(1000, count)
+                         if(mins_counter>58):
+                             mins_counter=0
+                             hours_counter+=1
+                             label2.config(text=str(mins_counter))
+                             label3.config(text = str(hours_counter))
+                         else:
+                             mins_counter+=1
+                             label2.config(text=str(mins_counter))
+                     else:
+                         secs_counter+=1
+                         label1.config(text=str(secs_counter))
+                         label1.after(1000, count)
+            count()
+        seconds_label = Label(stopwatch_frame , text = "0")
+        seconds_label.place(relx = 0.65 , rely = 0.3 , relwidth = 0.1  , relheight = 0.1)
+        seco = Label(stopwatch_frame , text = "secs")
+        seco.place(relx = 0.76 , rely = 0.356)
+
+        minutes_label = Label(stopwatch_frame , text = "0")
+        minutes_label.place(relx = 0.45 , rely = 0.3 , relwidth = 0.1  , relheight = 0.1)
+        min = Label(stopwatch_frame , text = "mins")
+        min.place(relx = 0.56 , rely = 0.356)
+        
+        hours_label = Label(stopwatch_frame , text = "0")
+        hours_label.place(relx = 0.25 , rely = 0.3 , relwidth = 0.1  , relheight = 0.1)
+        hr = Label(stopwatch_frame , text = "hrs")
+        hr.place(relx = 0.36 , rely = 0.356)
+
+        restart_button = Button(stopwatch_frame ,text = "Restart Stopwatch" , command = lambda: stopstop())
+        restart_button.place(relx = 0.444 , rely = 0.6)
+
+        counter(seconds_label , minutes_label , hours_label)
+
+
     print("stopwatch")
+    stopwatch_frame = Frame(c, bg = "cyan")
+    stopwatch_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
+
+    start_button = Button(stopwatch_frame ,text = "Start Stopwatch" , command = lambda: stopwa())
+    start_button.place(relx = 0.444 , rely = 0.6)
+
+    back = Button(stopwatch_frame , text = "< Back" , command = lambda : back2())
+    back.place(relx = 0 , rely = 0)
 
 def convertor():
     print("convertor")
@@ -103,4 +182,8 @@ l6.place(relx = 0.624 , rely = 0.74)
 
 root.resizable(0,0)
 root.mainloop()
+
+
+
+
 
