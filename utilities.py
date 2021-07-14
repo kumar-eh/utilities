@@ -3,15 +3,29 @@ from tkinter.messagebox import *
 from PIL import Image
 import time
 import winsound
+import mysql.connector
+
 global secs_counter
 global mins_counter
 global hours_counter
 secs_counter = 0
 mins_counter = 0
 hours_counter = 0
+
+mydb = mysql.connector.connect(
+host = "localhost",
+user = "root",
+password = "root"
+)
+my_cur = mydb.cursor()
+my_cur.execute("Create database if not exists utility")
+my_cur.execute("use utility")
+my_cur.execute("Create table if not exists todo(note char(255))")
+mydb.commit()
+####################################################################################################################################################################################
 def alarm():
     print("alarm")
-
+####################################################################################################################################################################################
 def timer():
     userText = False
     def userText(event):
@@ -46,7 +60,7 @@ def timer():
 
     back = Button(timer_frame , text = "< Back" , command = lambda : back1())
     back.place(relx = 0 , rely = 0)
-    
+####################################################################################################################################################################################
 def stopwatch():
     global secs_counter
     global mins_counter
@@ -123,13 +137,72 @@ def stopwatch():
 
     back = Button(stopwatch_frame , text = "< Back" , command = lambda : back2())
     back.place(relx = 0 , rely = 0)
-
+####################################################################################################################################################################################
 def convertor():
     print("convertor")
-
+####################################################################################################################################################################################
 def notes():
-    print("notes")
+    userText = False
+    
+    def back3():
+        notes_frame.destroy()
+        
+    def disp():
+        todo_list.delete(0,'end')
+        my_cur.execute("Select * from todo")
+        result = my_cur.fetchall()
+        for i in result:
+            todo_list.insert(0, i)
+    
+    def savenote(e):
+        my_cur.execute("insert into todo(note) values ('%s')" % e)
+        mydb.commit()
+        disp()
 
+
+    def del_note(todo_list):
+        try:
+            values = todo_list.curselection() #**
+            index = values[0]   #** 
+            val = todo_list.get(index)
+            print(val)
+            val = val[0]
+            my_cur.execute("Delete from todo where note = ('%s')"  %val)
+            mydb.commit()
+            disp()
+
+        except IndexError:
+            print(showwarning("ALert" , "Please select a note first"))
+    
+    def userText(event):
+       todo_entry.delete(0 , END)
+       usercheck = TRUE
+    print("todo")
+
+    notes_frame = Frame(c, bg = "cyan")
+    notes_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
+
+    todo_entry = Entry(notes_frame)
+    todo_entry.insert(0 , "What to do?")
+    todo_entry.bind('<Button>' , userText)
+    todo_entry.place(relx = 0.35, rely = 0.1)
+ 
+    todo_label = Label(notes_frame , text = "To-Do List" , width = 77)
+    todo_label.place(relx = 0.13 , rely = 0.25)
+    
+    todo_list = Listbox(notes_frame , width = 90 , height = 15)
+    todo_list.place(relx = 0.13 , rely = 0.3)
+    
+    submit_button = Button(notes_frame ,text = "Submit",  command = lambda: savenote(todo_entry.get()))
+    submit_button.place(relx = 0.52 , rely = 0.09)
+    disp()
+
+    del_button = Button(notes_frame , text = "Work done delete it" , command = lambda: del_note(todo_list))
+    del_button.place(relx = 0.8 , rely = 0.5)
+
+    back = Button(notes_frame , text = "< Back" , command = lambda : back3())
+    back.place(relx = 0 , rely = 0)
+####################################################################################################################################################################################
 root = Tk()
 root.title("Utilities")
 c = Canvas(root, width = "850" , height = "500")
@@ -144,7 +217,7 @@ bglabel1.place(relx = 0.35 , rely = 0.05)
 
 label_for_title = Label(frame_head, text = "Utilities" )
 label_for_title.place(relx = 0.41 , rely = 0.16 , relwidth = 0.1 , relheight = 0.7)
-##########################################################################################
+####################################################################################################################################################################################
 
 frame_body = Frame(c, bg = "cyan")
 frame_body.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
@@ -176,7 +249,7 @@ l5.place(relx = 0.273 , rely = 0.74)
 p6= PhotoImage(file="notes_logo.png")
 bglabel6=Label(frame_body, image=p6)
 bglabel6.place(relx = 0.6 , rely = 0.5)
-l6=Button(frame_body, text = "NOTES", command = lambda: notes())
+l6=Button(frame_body, text = "TO-DO", command = lambda: notes())
 l6.place(relx = 0.624 , rely = 0.74)
     
 
