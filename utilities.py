@@ -5,6 +5,12 @@ import time
 import winsound
 import mysql.connector
 
+global c1
+global c2
+global c3
+global c4
+global c5
+global c6
 global secs_counter
 global mins_counter
 global hours_counter
@@ -139,7 +145,103 @@ def stopwatch():
     back.place(relx = 0 , rely = 0)
 ####################################################################################################################################################################################
 def convertor():
+    global c1
+    global c2
+    global c3
+    global c4
+    global c5
+    global c6
+    def bmi():
+        def calc_bmi(wt , ht , bmi_label):
+            print(wt)
+            print(ht)
+            ht = int(ht)
+            ht*=ht
+            bmi= (int(wt)/int(ht))*10000
+            print(bmi)
+            bmi_label.insert(1, str(bmi))
+            
+        print("bmi")
+        bmi_frame = Frame(c, bg = "cyan")
+        bmi_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
+
+        wt_entry = Entry(bmi_frame)
+        wt_entry.place(relx = 0.45 , rely = 0.2)
+
+        wt_label = Label(bmi_frame , text = "Enter weight")
+        wt_label.place(relx = 0.3 , rely = 0.2)
+
+        ht_entry = Entry(bmi_frame)
+        ht_entry.place(relx = 0.45 , rely = 0.3)
+
+        ht_label = Label(bmi_frame , text = "Enter height")
+        ht_label.place(relx = 0.3 , rely = 0.3)
+
+        submit_butt = Button(bmi_frame , text = "Submit" ,command = lambda: calc_bmi(wt_entry.get(), ht_entry.get(), bmi_label) )
+        submit_butt.place(relx = 0.4 , rely = 0.4)
+        
+        bmi_label1 = Label(bmi_frame , text = "Your BMI")
+        bmi_label1.place(relx = 0.3 , rely = 0.5)
+        
+        bmi_label = Entry(bmi_frame)
+        bmi_label.place(relx = 0.45 , rely = 0.5)
+
+    def dis():
+        print("Discount")
+
+    def length():
+        print("Length")
+        
+    def timecon():
+        print("time conversion")
+
+    def temp():
+        print("Temperature")
+
+    def mass():
+        print("Mass")
+        
     print("convertor")
+    con_frame = Frame(c, bg = "cyan")
+    con_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
+
+    c1= PhotoImage(file="bmi_logo.png")
+    conlabel1=Label(con_frame, image=c1)
+    conlabel1.place(relx = 0.12 , rely = 0.11)
+    cb1 = Button(con_frame, text = "BMI" , command = lambda: bmi())
+    cb1.place(relx = 0.155 , rely = 0.35)
+
+    c2= PhotoImage(file="dis_logo.png")
+    conlabel2=Label(con_frame, image=c2)
+    conlabel2.place(relx = 0.44 , rely = 0.11)
+    cb2 = Button(con_frame, text = "Discount" , command = lambda: dis())
+    cb2.place(relx = 0.445, rely = 0.35)
+
+    c3= PhotoImage(file="length_logo.png")
+    conlabel3=Label(con_frame, image=c3)
+    conlabel3.place(relx = 0.7  ,rely = 0.11)
+    cb3=Button(con_frame, text = "Length" , command = lambda: length())
+    cb3.place(relx = 0.737 , rely = 0.35)
+
+    c4= PhotoImage(file="temp_logo.png")
+    conlabel4=Label(con_frame, image=c4)
+    conlabel4.place(relx = 0.1435 , rely = 0.5)
+    cb4=Button(con_frame, text = "Temperature" , command = lambda: temp())
+    cb4.place(relx = 0.13 , rely = 0.74)
+
+    c5= PhotoImage(file="time_logo.png")
+    conlabel5=Label(con_frame, image=c5)
+    conlabel5.place(relx = 0.42 , rely = 0.5)
+    cb5=Button(con_frame, text = "Time", command = lambda: timecon())
+    cb5.place(relx = 0.454 , rely = 0.74)
+
+    c6= PhotoImage(file="mass_logo.png")
+    conlabel6=Label(con_frame, image=c6)
+    conlabel6.place(relx = 0.712 , rely = 0.5)
+    cb6=Button(con_frame, text = "Mass", command = lambda: mass())
+    cb6.place(relx = 0.739 , rely = 0.74)
+
+    
 ####################################################################################################################################################################################
 def notes():
     userText = False
