@@ -53,7 +53,6 @@ def alarm():
             for i in a1:
                 if(i[0] == datetime.now().hour and i[1] == datetime.now().minute):
                     hr1 = str(i[0])
-                    print(type(hr1))
                     min1 = str(i[1])
                     for j in range(0, 4):    
                         winsound.Beep(freq, dur)
@@ -64,7 +63,6 @@ def alarm():
             time.sleep(1)
             alar()
         try:
-            print(hr , min)
             hr = int(hr)
             min = int(min)
             if(hr>24 or hr<0 or min>60 or min<0):
@@ -77,7 +75,6 @@ def alarm():
         except ValueError:
             messagebox.showwarning("ALert" , "Dont leave a field blank")
             
-    print("alarm")
     alarm_frame = Frame(c, bg = "cyan")
     alarm_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
 
@@ -87,15 +84,15 @@ def alarm():
     alarm_entry_hr = Entry(alarm_frame)
     alarm_entry_hr.insert(0 , "Enter hr here")
     alarm_entry_hr.bind("<Button>", userText1)
-    alarm_entry_hr.pack()
+    alarm_entry_hr.place(rely = 0.2 , relx = 0.42)
 
     alarm_entry_min = Entry(alarm_frame)
     alarm_entry_min.insert(0 , "Enter min here")
     alarm_entry_min.bind("<Button>", userText2)
-    alarm_entry_min.pack()
+    alarm_entry_min.place(relx = 0.42 , rely = 0.3)
 
     submit_butt = Button(alarm_frame , text = "Add alarm" ,command = lambda: add_alarm(alarm_entry_hr.get() , alarm_entry_min.get() , alarm_frame) )
-    submit_butt.place(relx = 0.4 , rely = 0.4)
+    submit_butt.place(relx = 0.45, rely = 0.4)
 
     back = Button(alarm_frame , text = "< Back" , command = lambda : back11())
     back.place(relx = 0 , rely = 0)
@@ -115,12 +112,10 @@ def timer():
         freq = 1000
         dur = 4000
         for i in range(1,timer):
-            print(i)
             time.sleep(1)
         else:
             winsound.Beep(freq, dur)
     
-    print("timer")
     timer_frame = Frame(c, bg = "cyan")
     timer_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
 
@@ -201,8 +196,6 @@ def stopwatch():
 
         counter(seconds_label , minutes_label , hours_label)
 
-
-    print("stopwatch")
     stopwatch_frame = Frame(c, bg = "cyan")
     stopwatch_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
 
@@ -228,15 +221,11 @@ def convertor():
             
         def calc_bmi(wt , ht , bmi_label):
             bmi_label.delete(0, 'end')
-            print(wt)
-            print(ht)
             ht = int(ht)
             ht*=ht
             bmi= (int(wt)/int(ht))*10000
-            print(bmi)
             bmi_label.insert(1, str(bmi))
             
-        print("bmi")
         bmi_frame = Frame(c, bg = "cyan")
         bmi_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
 
@@ -274,7 +263,6 @@ def convertor():
             dis_label.delete(0 , 'end')
             dis_label.insert(1 , str(discount))
 
-        print("Discount")
         dis_frame = Frame(c, bg = "cyan")
         dis_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
 
@@ -318,7 +306,7 @@ def convertor():
             feet_entry.insert(1 , feet)
             mm_entry.insert(1 , mm)
             
-        print("Length")
+
         len_frame = Frame(c, bg = "cyan")
         len_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
 
@@ -362,8 +350,7 @@ def convertor():
             hr = min/60
             min_entry.insert(1 , min)
             hr_entry.insert(1 , hr)
-            
-        print("time conversion")
+
         time_frame = Frame(c, bg = "cyan")
         time_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
 
@@ -398,7 +385,7 @@ def convertor():
             c_entry.delete(0 , 'end')
             c_entry.insert(1 , cel)
             
-        print("Temperature")
+
         temp_frame = Frame(c, bg = "cyan")
         temp_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
 
@@ -431,7 +418,6 @@ def convertor():
             mg_entry.insert(1 , mg)
             kg_entry.insert(1 , kg)
             
-        print("Mass")
         mass_frame = Frame(c, bg = "cyan")
         mass_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
 
@@ -455,8 +441,6 @@ def convertor():
 
         back = Button(mass_frame , text = "< Back" , command = lambda : back10())
         back.place(relx = 0 , rely = 0)
-        
-    print("convertor")
     con_frame = Frame(c, bg = "cyan")
     con_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
 
@@ -523,7 +507,6 @@ def notes():
             values = todo_list.curselection() #**
             index = values[0]   #** 
             val = todo_list.get(index)
-            print(val)
             val = val[0]
             my_cur.execute("Delete from todo where note = ('%s')"  %val)
             mydb.commit()
@@ -535,7 +518,6 @@ def notes():
     def userText(event):
        todo_entry.delete(0 , END)
        usercheck = TRUE
-    print("todo")
 
     notes_frame = Frame(c, bg = "cyan")
     notes_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
