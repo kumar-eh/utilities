@@ -4,6 +4,8 @@ from PIL import Image
 import time
 import winsound
 import mysql.connector
+from tkinter import messagebox
+from datetime import datetime
 
 global c1
 global c2
@@ -27,10 +29,76 @@ my_cur = mydb.cursor()
 my_cur.execute("Create database if not exists utility")
 my_cur.execute("use utility")
 my_cur.execute("Create table if not exists todo(note char(255))")
+my_cur.execute("Create table if not exists alarm(hr integer(11) , min integer(11))")
 mydb.commit()
 ####################################################################################################################################################################################
 def alarm():
+    def back11():
+        alarm_frame.destroy()
+    userText = False
+    def userText1(event):
+        alarm_entry_hr.delete(0 , END)
+        usercheck = TRUE
+    def userText2(event):
+        alarm_entry_min.delete(0 , END)
+        usercheck = TRUE
+    def add_alarm(hr , min , alarm_frame):
+        def alar():                
+            freq = 1000
+            dur = 500
+            now = datetime.now()
+            current_time = now.strftime("%H:%M:%S")
+            my_cur.execute("Select * from alarm")
+            a1 = my_cur.fetchall()
+            for i in a1:
+                if(i[0] == datetime.now().hour and i[1] == datetime.now().minute):
+                    hr1 = str(i[0])
+                    print(type(hr1))
+                    min1 = str(i[1])
+                    for j in range(0, 4):    
+                        winsound.Beep(freq, dur)
+                        my_cur.execute("Delete from alarm where hr = %s and min = %s " %(hr1 , min1))
+                        mydb.commit()
+                        alarm_frame.destroy()
+                        
+            time.sleep(1)
+            alar()
+        try:
+            print(hr , min)
+            hr = int(hr)
+            min = int(min)
+            if(hr>24 or hr<0 or min>60 or min<0):
+                messagebox.showwarning("Alert" , "Enter a valid time")
+                return
+            my_cur.execute("Insert into alarm (hr , min) values ('%s' ,'%s')" %(hr , min))
+            mydb.commit()
+            alar()
+
+        except ValueError:
+            messagebox.showwarning("ALert" , "Dont leave a field blank")
+            
     print("alarm")
+    alarm_frame = Frame(c, bg = "cyan")
+    alarm_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
+
+    eg_label = Label(alarm_frame , text = "Enter in 24 hr format eg.(23hr 20min)")
+    eg_label.pack()
+
+    alarm_entry_hr = Entry(alarm_frame)
+    alarm_entry_hr.insert(0 , "Enter hr here")
+    alarm_entry_hr.bind("<Button>", userText1)
+    alarm_entry_hr.pack()
+
+    alarm_entry_min = Entry(alarm_frame)
+    alarm_entry_min.insert(0 , "Enter min here")
+    alarm_entry_min.bind("<Button>", userText2)
+    alarm_entry_min.pack()
+
+    submit_butt = Button(alarm_frame , text = "Add alarm" ,command = lambda: add_alarm(alarm_entry_hr.get() , alarm_entry_min.get() , alarm_frame) )
+    submit_butt.place(relx = 0.4 , rely = 0.4)
+
+    back = Button(alarm_frame , text = "< Back" , command = lambda : back11())
+    back.place(relx = 0 , rely = 0)
 ####################################################################################################################################################################################
 def timer():
     userText = False
