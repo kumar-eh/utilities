@@ -151,8 +151,15 @@ def convertor():
     global c4
     global c5
     global c6
+    def back4():
+        con_frame.destroy()
+        
     def bmi():
+        def back5():
+            bmi_frame.destroy()
+            
         def calc_bmi(wt , ht , bmi_label):
+            bmi_label.delete(0, 'end')
             print(wt)
             print(ht)
             ht = int(ht)
@@ -168,38 +175,218 @@ def convertor():
         wt_entry = Entry(bmi_frame)
         wt_entry.place(relx = 0.45 , rely = 0.2)
 
-        wt_label = Label(bmi_frame , text = "Enter weight")
+        wt_label = Label(bmi_frame , text = "Enter weight in kg")
         wt_label.place(relx = 0.3 , rely = 0.2)
 
         ht_entry = Entry(bmi_frame)
         ht_entry.place(relx = 0.45 , rely = 0.3)
 
-        ht_label = Label(bmi_frame , text = "Enter height")
+        ht_label = Label(bmi_frame , text = "Enter height in cm")
         ht_label.place(relx = 0.3 , rely = 0.3)
-
-        submit_butt = Button(bmi_frame , text = "Submit" ,command = lambda: calc_bmi(wt_entry.get(), ht_entry.get(), bmi_label) )
-        submit_butt.place(relx = 0.4 , rely = 0.4)
         
         bmi_label1 = Label(bmi_frame , text = "Your BMI")
         bmi_label1.place(relx = 0.3 , rely = 0.5)
         
         bmi_label = Entry(bmi_frame)
         bmi_label.place(relx = 0.45 , rely = 0.5)
+        
+        back = Button(bmi_frame , text = "< Back" , command = lambda : back5())
+        back.place(relx = 0 , rely = 0)
+        
+        submit_butt = Button(bmi_frame , text = "Submit" ,command = lambda: calc_bmi(wt_entry.get(), ht_entry.get(), bmi_label) )
+        submit_butt.place(relx = 0.4 , rely = 0.4)
 
     def dis():
+        def back6():
+            dis_frame.destroy()
+        def calc_dis(op , per , dis_label):
+            op = float(op)
+            per = float(per)
+            discount = op*(per/100)
+            dis_label.delete(0 , 'end')
+            dis_label.insert(1 , str(discount))
+
         print("Discount")
+        dis_frame = Frame(c, bg = "cyan")
+        dis_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
+
+        op = Entry(dis_frame)
+        op.place(relx = 0.45 , rely = 0.2)
+
+        op_label = Label(dis_frame , text = "Enter original price")
+        op_label.place(relx = 0.3 , rely = 0.2)
+
+        percenta = Entry(dis_frame)
+        percenta.place(relx = 0.45 , rely = 0.3)
+
+        per_label = Label(dis_frame , text = "Enter discount %")
+        per_label.place(relx = 0.3 , rely = 0.3)
+
+        dis_label1 = Label(dis_frame , text = "Amount discounted")
+        dis_label1.place(relx = 0.3 , rely = 0.5)
+        
+        dis_label = Entry(dis_frame)
+        dis_label.place(relx = 0.45 , rely = 0.5)
+        
+        back = Button(dis_frame , text = "< Back" , command = lambda : back6())
+        back.place(relx = 0 , rely = 0)
+
+        submit_butt = Button(dis_frame , text = "Submit" ,command = lambda: calc_dis(op.get(), percenta.get(), dis_label))
+        submit_butt.place(relx = 0.4 , rely = 0.4)        
 
     def length():
+        def back7():
+            len_frame.destroy()
+            
+        def calc_len(cm , m_entry , feet_entry , mm_entry):
+            cm = float(cm)
+            feet = cm*0.328
+            m = cm*0.01
+            mm = cm*10
+            m_entry.delete(0 , 'end')
+            feet_entry.delete(0 , 'end')
+            mm_entry.delete(0 , 'end')
+            m_entry.insert(1 , m)
+            feet_entry.insert(1 , feet)
+            mm_entry.insert(1 , mm)
+            
         print("Length")
+        len_frame = Frame(c, bg = "cyan")
+        len_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
+
+        cm_entry = Entry(len_frame)
+        cm_entry.place(relx = 0.45 , rely = 0.2)
+
+        cm_label = Label(len_frame , text = "Enter length in cm")
+        cm_label.place(relx = 0.3 , rely = 0.2)
+
+        mm_label = Label(len_frame , text = "Length in mm")
+        mm_label.place(relx = 0.3 , rely = 0.4)
+        mm_entry = Entry(len_frame)
+        mm_entry.place(relx = 0.45 , rely = 0.4)
+
+        m_label = Label(len_frame , text = "Length in m")
+        m_label.place(relx = 0.3 , rely = 0.5)
+        m_entry = Entry(len_frame)
+        m_entry.place(relx = 0.45 , rely = 0.5)
+
+        feet_label = Label(len_frame , text = "Length in feet")
+        feet_label.place(relx = 0.3 , rely = 0.6)
+        feet_entry = Entry(len_frame)
+        feet_entry.place(relx = 0.45 , rely = 0.6)
+        
+        submit_butt = Button(len_frame , text = "Submit" ,command = lambda: calc_len(cm_entry.get() , m_entry , feet_entry , mm_entry))
+        submit_butt.place(relx = 0.4 , rely = 0.3)
+
+        back = Button(len_frame , text = "< Back" , command = lambda : back7())
+        back.place(relx = 0 , rely = 0)
+
         
     def timecon():
+        def back8():
+            time_frame.destroy()
+
+        def calc_time(s , min_entry , hr_entry):
+            min_entry.delete(0 , 'end')
+            hr_entry.delete(0 , 'end')
+            s = float(s)
+            min = s / 60
+            hr = min/60
+            min_entry.insert(1 , min)
+            hr_entry.insert(1 , hr)
+            
         print("time conversion")
+        time_frame = Frame(c, bg = "cyan")
+        time_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
+
+        time_entry = Entry(time_frame)
+        time_entry.place(relx = 0.45 , rely = 0.2)
+        s_label = Label(time_frame , text = "Enter time in seconds")
+        s_label.place(relx = 0.3 , rely = 0.2)
+
+        min_label = Label(time_frame , text = "Time in minutes")
+        min_label.place(relx = 0.3 , rely = 0.4)
+        min_entry = Entry(time_frame)
+        min_entry.place(relx = 0.45 , rely = 0.4)
+
+        hr_label = Label(time_frame , text = "Time in hours")
+        hr_label.place(relx = 0.3 , rely = 0.5)
+        hr_entry = Entry(time_frame)
+        hr_entry.place(relx = 0.45 , rely = 0.5)
+
+        submit_butt = Button(time_frame , text = "Submit" ,command = lambda: calc_time(time_entry.get() , min_entry , hr_entry))
+        submit_butt.place(relx = 0.4 , rely = 0.3)
+
+        back = Button(time_frame , text = "< Back" , command = lambda : back8())
+        back.place(relx = 0 , rely = 0)
 
     def temp():
-        print("Temperature")
+        def back9():
+            temp_frame.destroy()
 
+        def calc_temp(fah , c_entry):
+            fah = float(fah)
+            cel = (fah-32)*(5/9)
+            c_entry.delete(0 , 'end')
+            c_entry.insert(1 , cel)
+            
+        print("Temperature")
+        temp_frame = Frame(c, bg = "cyan")
+        temp_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
+
+        fah_entry = Entry(temp_frame)
+        fah_entry.place(relx = 0.45 , rely = 0.2)
+        fah_label = Label(temp_frame , text = "Temp in Fahrenheit")
+        fah_label.place(relx = 0.3 , rely = 0.2)
+
+        c_label = Label(temp_frame , text = "Temp in celcius")
+        c_label.place(relx = 0.3 , rely = 0.4)
+        c_entry = Entry(temp_frame)
+        c_entry.place(relx = 0.45 , rely = 0.4)
+
+        submit_butt = Button(temp_frame , text = "Submit" ,command = lambda: calc_temp(fah_entry.get() , c_entry))
+        submit_butt.place(relx = 0.4 , rely = 0.3)
+
+        back = Button(temp_frame , text = "< Back" , command = lambda : back9())
+        back.place(relx = 0 , rely = 0)
+
+        
     def mass():
+        def back10():
+            mass_frame.destroy()
+        def calc_mass(g , mg_entry , kg_entry):
+            g = float(g)
+            mg = g*1000
+            kg = g/1000
+            mg_entry.delete(0 , 'end')
+            kg_entry.delete(0 , 'end')
+            mg_entry.insert(1 , mg)
+            kg_entry.insert(1 , kg)
+            
         print("Mass")
+        mass_frame = Frame(c, bg = "cyan")
+        mass_frame.place(relx = 0, rely = 0.1 , relwidth = 1, relheight = 0.9)
+
+        g_entry = Entry(mass_frame)
+        g_entry.place(relx = 0.45 , rely = 0.2)
+        g_label = Label(mass_frame , text = "Enter weight in g")
+        g_label.place(relx = 0.3 , rely = 0.2)
+
+        mg_label = Label(mass_frame , text = "Weight in mg")
+        mg_label.place(relx = 0.3 , rely = 0.4)
+        mg_entry = Entry(mass_frame)
+        mg_entry.place(relx = 0.45 , rely = 0.4)
+
+        kg_label = Label(mass_frame , text = "Weight in kg")
+        kg_label.place(relx = 0.3 , rely = 0.5)
+        kg_entry = Entry(mass_frame)
+        kg_entry.place(relx = 0.45 , rely = 0.5)
+
+        submit_butt = Button(mass_frame , text = "Submit" ,command = lambda: calc_mass(g_entry.get() , mg_entry , kg_entry))
+        submit_butt.place(relx = 0.4 , rely = 0.3)
+
+        back = Button(mass_frame , text = "< Back" , command = lambda : back10())
+        back.place(relx = 0 , rely = 0)
         
     print("convertor")
     con_frame = Frame(c, bg = "cyan")
@@ -241,7 +428,8 @@ def convertor():
     cb6=Button(con_frame, text = "Mass", command = lambda: mass())
     cb6.place(relx = 0.739 , rely = 0.74)
 
-    
+    back = Button(con_frame , text = "< Back" , command = lambda : back4())
+    back.place(relx = 0 , rely = 0)
 ####################################################################################################################################################################################
 def notes():
     userText = False
